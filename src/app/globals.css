@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #e5e5e5;
+  --muted: #737373;
+  --accent: #3b82f6;
+  --border: #262626;
+  --card: #141414;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: white;
+}
+
+/* Prose styles for blog posts */
+.prose {
+  --tw-prose-body: var(--foreground);
+  --tw-prose-headings: white;
+  --tw-prose-links: var(--accent);
+  --tw-prose-code: #f472b6;
+  max-width: 65ch;
+}
+
+.prose h1, .prose h2, .prose h3 {
+  color: white;
+  font-weight: 600;
+}
+
+.prose a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.prose a:hover {
+  text-decoration: underline;
+}
+
+.prose code {
+  background: var(--card);
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.prose pre {
+  background: var(--card) !important;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+}
+
+/* Code highlighting */
+.hljs {
+  background: var(--card) !important;
+}
