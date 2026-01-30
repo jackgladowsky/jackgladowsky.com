@@ -11,7 +11,7 @@ const projects = [
     description: "Senior capstone project. Unity-based AR visualization for on-bike HUD with YOLO object detection and radar fusion running on Jetson Orin Nano. Placed 2nd out of 30 groups.",
     tags: ["Python", "Unity", "C#", "Computer Vision", "Jetson"],
     github: null,
-    demo: null,
+    demo: "/capstone.pdf",
     year: "2025",
   },
   {

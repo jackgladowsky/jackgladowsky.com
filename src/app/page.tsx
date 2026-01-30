@@ -5,7 +5,7 @@ const projects = [
     title: "AR Cycling Safety System",
     description: "Unity AR visualization with YOLO object detection on Jetson Orin Nano. 2nd place in senior capstone.",
     tags: ["Python", "Unity", "C#", "Computer Vision"],
-    link: "#",
+    link: "/capstone.pdf",
   },
   {
     title: "Social Media Simulation",
