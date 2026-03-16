@@ -1,0 +1,45 @@
+---
+title: "ARC²: Building an AR Cycling Safety System"
+description: "How our team built an augmented reality HUD for cyclists using YOLO, radar, and a Jetson Orin Nano. Placed 2nd out of 30 groups."
+date: "2026-03-16"
+tags: ["computer-vision", "AR", "embedded", "capstone"]
+---
+
+For my senior capstone, our team of five built **ARC²** (AR Cycling Against Rearview Collisions) — a system that gives cyclists real-time awareness of hazards approaching from behind using augmented reality, computer vision, and radar sensor fusion.
+
+We placed 2nd out of 30 groups.
+
+## The problem
+
+Cyclists lack rear awareness in urban environments. Most accidents happen because riders can't see or react to hazards coming from behind. In the US, **1,166 bicyclists were killed in 2023**, and 81% of fatal bike crashes happen in urban areas — exactly where an AR warning system could help.
+
+Meanwhile, cars have rapidly adopted driver-assist features like lane-keeping and automatic emergency braking. Bikes have not kept up. We wanted to change that.
+
+## System architecture
+
+The system has three layers: **sensing**, **processing**, and **display**.
+
+**Sensing** — A rear-facing USB webcam and a TI IWR6843 mmWave radar module are mounted to the back of the bike. The radar has a 75° horizontal FOV with a max sensing distance of 14.3m and range resolution of ~7cm.
+
+**Processing** — An NVIDIA Jetson Orin Nano runs two parallel pipelines:
+
+- A **YOLO object detection** pipeline on the webcam feed, classifying vehicles and pedestrians in real-time and computing bounding boxes
+- A **radar data parser** that extracts object positions (x, y, z) per frame
+
+Both pipelines feed into a **threat detection algorithm** that synchronizes timestamps, computes azimuth angles from each sensor, and matches detections by horizontal angle. The result is a fused detection with classification (vehicle or person), confidence score, and location (left/center/right + distance in meters).
+
+**Display** — Fused detections are sent over WebSocket to a **Magic Leap 2 AR headset** running a custom Unity HUD. The HUD shows color-coded vehicle icons based on proximity:
+
+- **Red** — less than 5m (close)
+- **Yellow** — 5–10m (near)
+- **Green** — greater than 10m (far)
+
+## Sensor fusion
+
+The core technical challenge was fusing two very different sensor modalities. The webcam gives you rich classification (what the object is) but no depth. The radar gives precise distance but can't tell you if it's a car or a trash can.
+
+Our fusion algorithm bridges this gap by converting both sensor outputs into a common azimuth-based coordinate system. For each frame, it matches radar points to YOLO bounding boxes based on angular proximity, producing a single detection that has both the classification from vision and the distance from radar.
+
+## Takeaways
+
+ARC² demonstrates that the same safety technologies we take for granted in modern cars — object detection, distance sensing, heads-up displays — can be adapted for cyclists using off-the-shelf hardware and edge computing. The full slide deck is available [here](/capstone.pdf).
